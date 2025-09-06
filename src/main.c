@@ -7,7 +7,7 @@
 
 int main(void) {
     SetConfigFlags(FLAG_FULLSCREEN_MODE);
-    InitWindow(0, 0, "raylib 3D - simple block map");
+    InitWindow(0, 0, "raylib 3D");
     SetTargetFPS(60);
 
     Camera3D cam = {0};
@@ -20,7 +20,7 @@ int main(void) {
     DisableCursor();
     float yaw = 180.0f, pitch = -20.0f;
     const float moveSpeed = 8.0f;
-    const float mouseSens = 0.15f;
+    const float mouseSens = 0.10f;
 
     while (!WindowShouldClose()) {
         Vector2 md = GetMouseDelta();
