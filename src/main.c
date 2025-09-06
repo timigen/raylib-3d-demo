@@ -10,16 +10,16 @@ int main(void) {
     SetTargetFPS(TARGET_FPS);
 
     Camera3D camera = { 0 };
-    camera.position = (Vector3){ 4.0f, 2.0f, 4.0f };
-    camera.target = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.position = (Vector3){ 8.0f, 8.0f, 8.0f };
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
-    camera.fovy = 80.0f;
+    camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
     Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
 
     while (!WindowShouldClose()) {
-        UpdateCamera(&camera, CAMERA_ORTHOGRAPHIC);
+        UpdateCamera(&camera, CAMERA_FREE);
 
         BeginDrawing();
         ClearBackground(BLACK);
