@@ -1,5 +1,6 @@
 #include "engine.h"
 #include "camera.h"
+#include "ecs.h"
 #include "io.h"
 #include "raylib.h"
 #include "screen.h"
@@ -11,6 +12,11 @@ void engine_init() {
   SetConfigFlags(FLAG_FULLSCREEN_MODE);
   InitWindow(0, 0, "raylib 3D");
   SetTargetFPS(60);
+  ecs_init();
+  Entity a = ecs_create();
+  ecs_add_position(a, (Vector3){0, 0, 0});
+  ecs_add_velocity(a, (Vector3){0, 0, 0});
+  ecs_add_render(a, (Render){.size = {5}, .color = WHITE, .wire = false});
   screen_init();
   camera_init();
 }
@@ -34,17 +40,10 @@ void engine_update(Input input, float dt) {
   DrawPlane((Vector3){0.0f, 0.0f, 0.0f}, (Vector2){MAP_SIZE, MAP_SIZE},
             (Color){120, 120, 120, 255});
 
-  // Add some reference cubes at different positions
-  DrawCube((Vector3){0.0f, 0.5f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
-  DrawCube((Vector3){10.0f, 0.5f, 0.0f}, 1.0f, 1.0f, 1.0f, GREEN);
-  DrawCube((Vector3){0.0f, 0.5f, 10.0f}, 1.0f, 1.0f, 1.0f, BLUE);
-  DrawCube((Vector3){-10.0f, 0.5f, 0.0f}, 1.0f, 1.0f, 1.0f, YELLOW);
-  DrawCube((Vector3){0.0f, 0.5f, -10.0f}, 1.0f, 1.0f, 1.0f, PURPLE);
-
   // Add some larger reference objects
   DrawCube((Vector3){20.0f, 1.0f, 20.0f}, 2.0f, 2.0f, 2.0f, ORANGE);
   DrawCube((Vector3){-20.0f, 1.0f, -20.0f}, 2.0f, 2.0f, 2.0f, PINK);
-
+  sys_render_3d();
   EndMode3D();
 
   DrawText("WASD/Arrows or mouse edge scroll to move | Mouse wheel to zoom | "
