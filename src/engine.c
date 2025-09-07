@@ -23,7 +23,6 @@ void engine_run() {
 
 void engine_update(Input input, float dt) {
   Vector3 screenMove = screen_move(input);
-
   camera_update(input, screenMove, dt);
 
   BeginDrawing();
