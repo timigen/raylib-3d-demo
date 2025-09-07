@@ -5,8 +5,7 @@
 #define TILE 1.0f
 
 int main(void) {
-  Camera3D camera = {0};
-  engine_init(&camera);
+  engine_init();
 
   while (!WindowShouldClose()) {
     engine_run();

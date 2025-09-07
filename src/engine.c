@@ -7,30 +7,19 @@ const float moveSpeed = 15.0f;
 
 void engine_update(float dt);
 
-const float ZOOM_SPEED = 3.0f;
-const float MIN_ZOOM = 15.0f;
-const float MAX_ZOOM = 80.0f;
-const float EDGE_SCROLL_ZONE = 50.0f;
-int SCREEN_WIDTH;
-int SCREEN_HEIGHT;
-float cameraHeight = 25.0f;
-
-Camera3D *CAMERA;
-
-void engine_init(Camera3D *cam) {
+void engine_init() {
   SetConfigFlags(FLAG_FULLSCREEN_MODE);
   InitWindow(0, 0, "raylib 3D");
   SetTargetFPS(60);
-  SCREEN_WIDTH = GetScreenWidth();
-  SCREEN_HEIGHT = GetScreenHeight();
+  
 
-  CAMERA = cam;
+  // CAMERA = cam;
 
-  CAMERA->position = (Vector3){0.0f, 25.0f, 25.0f};
-  CAMERA->target = (Vector3){0.0f, 0.0f, 0.0f};
-  CAMERA->up = (Vector3){0.0f, 1.0f, 0.0f};
-  CAMERA->fovy = 45.0f;
-  CAMERA->projection = CAMERA_PERSPECTIVE;
+  // CAMERA->position = (Vector3){0.0f, 25.0f, 25.0f};
+  // CAMERA->target = (Vector3){0.0f, 0.0f, 0.0f};
+  // CAMERA->up = (Vector3){0.0f, 1.0f, 0.0f};
+  // CAMERA->fovy = 45.0f;
+  // CAMERA->projection = CAMERA_PERSPECTIVE;
 }
 
 void engine_run() {
@@ -94,9 +83,6 @@ void engine_update(float dt) {
   // Draw the ground plane
   DrawPlane((Vector3){0.0f, 0.0f, 0.0f}, (Vector2){MAP_SIZE, MAP_SIZE},
             (Color){120, 120, 120, 255});
-
-  // Draw a grid to see movement clearly
-  DrawGrid(100, TILE);
 
   // Add some reference cubes at different positions
   DrawCube((Vector3){0.0f, 0.5f, 0.0f}, 1.0f, 1.0f, 1.0f, RED);
