@@ -16,7 +16,7 @@ void engine_init() {
   Entity a = ecs_create();
   ecs_add_position(a, (Vector3){0, 0, 0});
   ecs_add_velocity(a, (Vector3){0, 0, 0});
-  ecs_add_render(a, (Render){.size = {5}, .color = WHITE, .wire = false});
+  ecs_add_render(a, (Render){.size = {5, 5, 5}, .color = RED, .wire = false});
   screen_init();
   camera_init();
 }
@@ -30,7 +30,7 @@ void engine_run() {
 void engine_update(Input input, float dt) {
   Vector3 screenMove = screen_move(input);
   camera_update(input, screenMove, dt);
-
+  sys_move(dt);
   BeginDrawing();
   ClearBackground(BLACK);
 
@@ -40,9 +40,6 @@ void engine_update(Input input, float dt) {
   DrawPlane((Vector3){0.0f, 0.0f, 0.0f}, (Vector2){MAP_SIZE, MAP_SIZE},
             (Color){120, 120, 120, 255});
 
-  // Add some larger reference objects
-  DrawCube((Vector3){20.0f, 1.0f, 20.0f}, 2.0f, 2.0f, 2.0f, ORANGE);
-  DrawCube((Vector3){-20.0f, 1.0f, -20.0f}, 2.0f, 2.0f, 2.0f, PINK);
   sys_render_3d();
   EndMode3D();
 
