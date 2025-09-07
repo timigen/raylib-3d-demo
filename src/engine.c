@@ -12,13 +12,17 @@ void engine_init() {
   SetConfigFlags(FLAG_FULLSCREEN_MODE);
   InitWindow(0, 0, "raylib 3D");
   SetTargetFPS(60);
+  screen_init();
+  camera_init();
   ecs_init();
   Entity a = ecs_create();
   ecs_add_position(a, (Vector3){0, 0, 0});
   ecs_add_velocity(a, (Vector3){0, 0, 0});
   ecs_add_render(a, (Render){.size = {5, 5, 5}, .color = RED, .wire = false});
-  screen_init();
-  camera_init();
+  Entity b = ecs_create();
+  ecs_add_position(b, (Vector3){0, 0, 15});
+  ecs_add_velocity(b, (Vector3){0, 0, -1});
+  ecs_add_render(b, (Render){.size = {5, 5, 5}, .color = PINK, .wire = false});
 }
 
 void engine_run() {
