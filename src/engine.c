@@ -12,6 +12,7 @@ void engine_init() {
   InitWindow(0, 0, "raylib 3D");
   SetTargetFPS(60);
   screen_init();
+  camera_init();
 }
 
 void engine_run() {

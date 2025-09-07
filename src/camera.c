@@ -1,5 +1,6 @@
 #include "io.h"
 #include "raylib.h"
+#include "raymath.h"
 
 Camera3D CAMERA = {0};
 
@@ -12,7 +13,8 @@ const float MAX_ZOOM = 80.0f;
 float cameraHeight = 25.0f;
 
 void camera_init() {
-  CAMERA.position = (Vector3){0.0f, cameraHeight, 0.0f};
+  CAMERA.position =
+      (Vector3){0.0f, cameraHeight, cameraHeight}; // RTS side angle
   CAMERA.target = (Vector3){0.0f, 0.0f, 0.0f};
   CAMERA.up = (Vector3){0.0f, 1.0f, 0.0f};
   CAMERA.fovy = 45.0f;
@@ -20,11 +22,29 @@ void camera_init() {
 }
 
 void camera_update(Input input, Vector3 screenMovement, float dt) {
+  // Handle zoom
   if (input.zoom != 0) {
-    cameraHeight -= input.zoom * ZOOM_SPEED * dt;
+    cameraHeight -= input.zoom * ZOOM_SPEED;
     if (cameraHeight < MIN_ZOOM)
       cameraHeight = MIN_ZOOM;
     if (cameraHeight > MAX_ZOOM)
       cameraHeight = MAX_ZOOM;
   }
+
+  // Handle movement (from WASD, arrows, and edge scrolling)
+  Vector3 movement = Vector3Scale(screenMovement, moveSpeed * dt);
+
+  // Apply movement with bounds checking
+  Vector3 newPos = Vector3Add(CAMERA.position, movement);
+  float mapBound = 16000.0f * 0.4f; // MAP_SIZE * 0.4f
+  if (newPos.x > -mapBound && newPos.x < mapBound)
+    CAMERA.position.x = newPos.x;
+  if (newPos.z > -mapBound && newPos.z < mapBound)
+    CAMERA.position.z = newPos.z;
+
+  // Update camera position and target for RTS perspective with side angle
+  CAMERA.position.y = cameraHeight;
+  float offsetRatio = cameraHeight / 25.0f; // Scale offset with zoom
+  CAMERA.target = (Vector3){CAMERA.position.x, 0.0f,
+                            CAMERA.position.z - (10.0f * offsetRatio)};
 }
